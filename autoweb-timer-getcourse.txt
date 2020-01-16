@@ -53,7 +53,12 @@
 <script>
 	window.addEventListener('DOMContentLoaded', function () {
 
-		function showTime(userHours, userMinutes = 60, url) {
+		let timer = document.querySelector('#timer'),
+			diffHours = timer.querySelector('.hours'),
+			diffMinutes = timer.querySelector('.minutes'),
+			diffSeconds = timer.querySelector('.seconds');
+
+		function showTime(userHours = 19, userMinutes = 30, userUrl = 'https://getcourse.ru/') {
 			// Получаем время пользователя
 			let d = new Date(),
 				// Разница МСК часового пояса с UTC
@@ -64,14 +69,10 @@
 				diffUtcTime = mskUtcHours - (viewerTimeZone),
 				hours = d.getHours() - diffUtcTime,
 				minutes = d.getMinutes(),
-				seconds = d.getSeconds(),
-				timer = document.querySelector('#timer'),
-				diffHours = timer.querySelector('.hours'),
-				diffMinutes = timer.querySelector('.minutes'),
-				diffSeconds = timer.querySelector('.seconds');
+				seconds = d.getSeconds();
 
 			if (hours == userHours && (minutes - userMinutes < 0)) {
-				location.href = url;
+				location.href = userUrl;
 			}
 
 			if (hours < userHours) {
@@ -83,7 +84,7 @@
 			diffMinutes.textContent = setZeroBeforeDate(59 - minutes);
 			diffSeconds.textContent = setZeroBeforeDate(59 - seconds);
 		}
-		setInterval(showTime, 1000, 19, 'https://getcourse.ru/');
+		setInterval(showTime, 1000, 19, 30, 'https://getcourse.ru/');
 
 		function setZeroBeforeDate(item) {
 			if (item < 10) {
